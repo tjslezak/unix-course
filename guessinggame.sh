@@ -1,31 +1,31 @@
 #!/usr/bin/env bash
 # File: guessinggame.sh
 
-function nfpwd () {
-ls | wc -l
-}
-
-nf="$(nfpwd)"
-#echo $nf
-
+clear
 echo "Guess how many files are in the current directory and then press Enter:"
 read response
 
-if [[$response -eq $nf]] 
-then
-	echo "You guessed correctly!"
-elif [[$response -gt $nf]]
-then
-	echo "You guessed too high. Guess again!"
-elif [[$response -lt $nf]]
-then
-	echo "You guessed too low. Guess again!"
-else 
-	echo "You guessed incorrectly. Guess again!"
-fi
+function nfpwd {
+	local number=$(ls | wc -l)-1
+	echo $number
+}
 
-while [ $response -ne $nf ]
+nf=$(nfpwd)
+
+while [[ $response -ne $nf ]]
 do
-echo "Enter your guess: "
-
+	if [[ $response -gt $nf ]]
+	then
+		echo "You guessed too high. Guess again!"
+	elif [[ $response -lt $nf ]]
+	then
+		echo "You guessed too low. Guess again!"
+	else 
+		echo "You guessed incorrectly. Integers only!"
+	fi
+	echo
+	echo "Try another guess: "
+	read response
 done 
+
+echo "Contgrats! You guessed correctly!"
